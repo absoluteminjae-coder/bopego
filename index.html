@@ -176,7 +176,7 @@ section { padding: 96px 24px; }
   background: #fff; border-radius: 12px; padding: 16px 18px;
   border: 1px solid rgba(184,217,194,0.5);
 }
-.sol-point-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.sol-point-icon { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; object-fit: contain; }
 .sol-point-name { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 3px; }
 .sol-point-desc { font-size: 12px; color: var(--gray); line-height: 1.6; }
 
@@ -393,7 +393,7 @@ footer {
   .indc-side-2 { background: #2d5a3d; }
   .indc-side-3 { background: #3d7a52; }
 
-  .indc-side-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+  .indc-side-icon { width: 56px; height: 56px; margin-bottom: 14px; display: block; object-fit: contain; }
   .indc-side-title {
     font-family: 'Noto Serif KR', serif;
     font-size: 22px; font-weight: 700;
@@ -473,6 +473,58 @@ footer {
     .indc-types { grid-template-columns: 1fr; }
   }
 
+
+  /* ── 후기 사진 그리드 ── */
+  .rev-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .rev-photo-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+  }
+  .rev-photo-card img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.35s ease;
+  }
+  .rev-photo-card:hover img { transform: scale(1.05); }
+  .rev-photo-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(10,30,20,0.82) 0%, transparent 100%);
+    color: #fff;
+    font-family: var(--serif);
+    font-size: 18px; font-weight: 700;
+    padding: 24px 16px 14px;
+  }
+  .rev-photo-card::after {
+    content: '치료사례 보기';
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    color: #fff; font-size: 11px;
+    padding: 4px 10px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .rev-photo-card:hover::after { opacity: 1; }
+  @media (max-width: 600px) {
+    .rev-photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .rev-photo-label { font-size: 15px; }
+  }
+
+
+@media(max-width:640px){
+  div[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
+}
+
 </style>
 </head>
 <body>
@@ -537,14 +589,14 @@ footer {
     <!-- 카드 1 -->
     <div class="indc-card fade-up">
       <div class="indc-side indc-side-1">
-        <span class="indc-side-icon">🎙️</span>
+        <img class="indc-side-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CiAgPCEtLSDrp4jsnbTtgawg67CU65SUIC0tPgogIDxyZWN0IHg9IjI4IiB5PSI4IiB3aWR0aD0iMjQiIGhlaWdodD0iMzgiIHJ4PSIxMiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjg1KSIvPgogIDwhLS0g6re466a0IOudvOyduCAtLT4KICA8bGluZSB4MT0iMjgiIHkxPSIyNCIgeDI9IjUyIiB5Mj0iMjQiIHN0cm9rZT0icmdiYSgyNiw1OCw0MiwwLjIpIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDxsaW5lIHgxPSIyOCIgeTE9IjMwIiB4Mj0iNTIiIHkyPSIzMCIgc3Ryb2tlPSJyZ2JhKDI2LDU4LDQyLDAuMikiIHN0cm9rZS13aWR0aD0iMS4yIi8+CiAgPGxpbmUgeDE9IjI4IiB5MT0iMzYiIHgyPSI1MiIgeTI9IjM2IiBzdHJva2U9InJnYmEoMjYsNTgsNDIsMC4yKSIgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICA8IS0tIOyKpO2DoOuTnCAtLT4KICA8bGluZSB4MT0iNDAiIHkxPSI0NiIgeDI9IjQwIiB5Mj0iNjIiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjI4IiB5MT0iNjIiIHgyPSI1MiIgeTI9IjYyIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0g7J2M7YyMIC0tPgogIDxwYXRoIGQ9Ik01OCAxOCBRNjUgMjcgNTggMzYiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjcpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik02MyAxNCBRNzMgMjcgNjMgNDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjQ1KSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0yMiAxOCBRMTUgMjcgMjIgMzYiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjcpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0xNyAxNCBRNyAyNyAxNyA0MCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNDUpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==" alt="목·성대" style="width:56px;height:56px;" />
         <div class="indc-side-title">목·성대</div>
         <div class="indc-side-tags">성대결절 · 성대폴립<br>쉰 목소리 · 인후통</div>
       </div>
       <div class="indc-body">
         <p class="indc-desc">성대결절·성대폴립·쉰 목소리는 양방에서 마땅한 약이 없지만, 보폐고엔오는 성대 점막 염증을 빠르게 가라앉히고 회복을 촉진합니다. 급성 인후통에는 항생제보다 빠른 효과를 보이는 경우도 많습니다.</p>
         <div class="indc-tip">
-          <div class="indc-tip-title">💡 강사·가수·교사 등 성대를 많이 쓰는 분</div>
+          <div class="indc-tip-title">강사·가수·교사 등 성대를 많이 쓰는 분</div>
           <p class="indc-tip-desc">투수가 경기 후 아이스팩으로 팔을 식히듯, 말·노래 후 보폐고엔오로 성대 열을 빠르게 식혀주세요. 증상이 없어도 예방 차원에서 꾸준한 복용을 권장합니다.</p>
         </div>
         <div class="indc-pills">
@@ -558,7 +610,7 @@ footer {
     <!-- 카드 2 -->
     <div class="indc-card fade-up">
       <div class="indc-side indc-side-2">
-        <span class="indc-side-icon">🤧</span>
+        <img class="indc-side-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CiAgPCEtLSDquLDqtIAgLS0+CiAgPHJlY3QgeD0iMzYiIHk9IjYiIHdpZHRoPSI4IiBoZWlnaHQ9IjIwIiByeD0iNCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjc1KSIvPgogIDwhLS0g7Jm87Kq9IO2PkCAtLT4KICA8ZWxsaXBzZSBjeD0iMjYiIGN5PSI0NCIgcng9IjE4IiByeT0iMjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yMikiLz4KICA8cGF0aCBkPSJNMTggMzYgUTI0IDI4IDI4IDM2IFEzMiA0NCAyOCA1MiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNykiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNMjAgMjggUTI2IDIyIDMwIDI4IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC41NSkiIHN0cm9rZS13aWR0aD0iMS4zIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8IS0tIOyYpOuluOyqvSDtj5AgLS0+CiAgPGVsbGlwc2UgY3g9IjU0IiBjeT0iNDQiIHJ4PSIxOCIgcnk9IjIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMjIpIi8+CiAgPHBhdGggZD0iTTYyIDM2IFE1NiAyOCA1MiAzNiBRNDggNDQgNTIgNTIiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjcpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTYwIDI4IFE1NCAyMiA1MCAyOCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNTUpIiBzdHJva2Utd2lkdGg9IjEuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSDquLDsuagg7YyM64+ZIC0tPgogIDxwYXRoIGQ9Ik00MCA2OCBRNTIgNjQgNjQgNzAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik00MCA3NCBRNTUgNjkgNzAgNzYiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==" alt="가래기침" style="width:56px;height:56px;" />
         <div class="indc-side-title">가래기침</div>
         <div class="indc-side-tags">코로나 후 기침<br>항생제로 안 낫는 기침</div>
       </div>
@@ -585,7 +637,7 @@ footer {
     <!-- 카드 3 -->
     <div class="indc-card fade-up">
       <div class="indc-side indc-side-3">
-        <span class="indc-side-icon">👃</span>
+        <img class="indc-side-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+CiAgPCEtLSDsvZQg7Jm47ZiVIC0tPgogIDxwYXRoIGQ9Ik00MCAxMiBDNDAgMTIgMjggMzAgMjYgNDQgQzI0IDU0IDMwIDYwIDQwIDYwIEM1MCA2MCA1NiA1NCA1NCA0NCBDNTIgMzAgNDAgMTIgNDAgMTJaIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMjIpIi8+CiAgPCEtLSDsvZTrs7wgLS0+CiAgPGVsbGlwc2UgY3g9IjMyIiBjeT0iNTAiIHJ4PSI5IiByeT0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjc4KSIvPgogIDxlbGxpcHNlIGN4PSI0OCIgY3k9IjUwIiByeD0iOSIgcnk9IjciIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC43OCkiLz4KICA8IS0tIOy9p+q1rOupjSAtLT4KICA8ZWxsaXBzZSBjeD0iMzIiIGN5PSI1MSIgcng9IjQiIHJ5PSIzIiBmaWxsPSJyZ2JhKDI2LDU4LDQyLDAuMykiLz4KICA8ZWxsaXBzZSBjeD0iNDgiIGN5PSI1MSIgcng9IjQiIHJ5PSIzIiBmaWxsPSJyZ2JhKDI2LDU4LDQyLDAuMykiLz4KICA8IS0tIOusvOuwqeyauCAtLT4KICA8ZWxsaXBzZSBjeD0iMzIiIGN5PSI2MiIgcng9IjMiIHJ5PSI0LjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42NSkiLz4KICA8ZWxsaXBzZSBjeD0iNDgiIGN5PSI2NSIgcng9IjIuNSIgcnk9IjQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC41NSkiLz4KICA8ZWxsaXBzZSBjeD0iMzIiIGN5PSI3MCIgcng9IjIiIHJ5PSIzLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIvPgogIDwhLS0g67CY7KedIC0tPgogIDxjaXJjbGUgY3g9IjYyIiBjeT0iMTgiIHI9IjMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIvPgogIDxjaXJjbGUgY3g9IjIwIiBjeT0iMjIiIHI9IjIuNSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjM1KSIvPgo8L3N2Zz4=" alt="코·비강" style="width:56px;height:56px;" />
         <div class="indc-side-title">코·비강</div>
         <div class="indc-side-tags">축농증 · 후비루<br>코막힘 · 감기 인후통</div>
       </div>
@@ -602,7 +654,7 @@ footer {
           </div>
         </div>
         <div class="indc-tip">
-          <div class="indc-tip-title">📅 치료 기간 안내</div>
+          <div class="indc-tip-title">치료 기간 안내</div>
           <p class="indc-tip-desc">보통 <strong>1개월 내</strong> 호전 반응 확인 → 뿌리까지 치료하려면 <strong>수개월 꾸준히</strong> 복용<br>증상이 심할 땐 하루 최대 <strong>5회</strong>까지 복용 가능합니다</p>
         </div>
       </div>
@@ -616,31 +668,31 @@ footer {
   <div class="container">
     <div class="fade-up">
       <div class="sec-eye"><div class="sec-eye-dot"></div><span class="sec-eye-text">치료 소개</span></div>
-      <h2 class="sec-title">보폐고엔오(補肺固NO)<br>폐를 보강하고 산화질소로 면역을 깨웁니다</h2>
+      <h2 class="sec-title">보폐고엔오<br>폐를 보강하고 산화질소로 면역을 깨웁니다</h2>
     </div>
     <div class="sol-what fade-up">
       <div>
         <span class="sol-no-badge">JESEHYUN SIGNATURE</span>
-        <div class="sol-name">보폐고엔오<br>補肺固NO</div>
-        <div class="sol-meaning">補肺(보폐) + 固NO(산화질소 고정·촉진)</div>
-        <p class="sol-desc">한의학의 '보폐(폐를 보한다)' 원리에 현대 의학의 산화질소(Nitric Oxide) 기전을 접목한 제세현한의원의 특화 치료입니다.<br><br>산화질소는 기관지를 확장하고 호흡기 점막 혈류를 개선하며 항균·항염 효과로 면역을 강화합니다. 한약 처방으로 산화질소 생성을 촉진하고 폐 기능을 근본적으로 회복시킵니다.</p>
+        <div class="sol-name">보폐고엔오</div>
+        
+        <p class="sol-desc">만성 염증 개선을 위해 특효방을 연구하는 한의사그룹 1,641명이 함께 연구·조제하여 임상 투약을 통해 수년간 성분과 배합을 발전시켜 온 천연 한약재 기반 치료제입니다. 이미 전국 한의원에서 누적처방 150만 포 이상 되었으며, 그 임상 효과가 꾸준히 확인되고 있습니다.<br><br>산화질소는 기관지를 확장하고 호흡기 점막 혈류를 개선하며 항균·항염 효과로 면역을 강화합니다. 한약 처방으로 산화질소 생성을 촉진하고 폐 기능을 근본적으로 회복시킵니다.</p>
       </div>
       <div class="sol-right">
         <div class="sol-points">
           <div class="sol-point">
-            <span class="sol-point-icon">🫁</span>
+            <img class="sol-point-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+CiAgPHJlY3QgeD0iMjEiIHk9IjMiIHdpZHRoPSI2IiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iIzNkN2E1MiIvPgogIDxlbGxpcHNlIGN4PSIxMyIgY3k9IjMwIiByeD0iMTEiIHJ5PSIxNCIgZmlsbD0iIzZhYWI3ZSIgb3BhY2l0eT0iMC4zIi8+CiAgPGVsbGlwc2UgY3g9IjM1IiBjeT0iMzAiIHJ4PSIxMSIgcnk9IjE0IiBmaWxsPSIjNmFhYjdlIiBvcGFjaXR5PSIwLjMiLz4KICA8ZWxsaXBzZSBjeD0iMTMiIGN5PSIzMCIgcng9IjkiIHJ5PSIxMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWEzYTJhIiBzdHJva2Utd2lkdGg9IjEuOCIvPgogIDxlbGxpcHNlIGN4PSIzNSIgY3k9IjMwIiByeD0iOSIgcnk9IjEyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxYTNhMmEiIHN0cm9rZS13aWR0aD0iMS44Ii8+CiAgPHBhdGggZD0iTTcgMjQgUTExIDE3IDEzIDI0IFExNSAzMSAxMyAzNyIgc3Ryb2tlPSIjM2Q3YTUyIiBzdHJva2Utd2lkdGg9IjEuNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTQxIDI0IFEzNyAxNyAzNSAyNCBRMzMgMzEgMzUgMzciIHN0cm9rZT0iIzNkN2E1MiIgc3Ryb2tlLXdpZHRoPSIxLjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" style="width:28px;height:28px;flex-shrink:0;margin-top:2px;" />
             <div><div class="sol-point-name">폐 기능 직접 보강</div><div class="sol-point-desc">폐 조직과 점막의 기능을 회복시키는 맞춤 한약 처방</div></div>
           </div>
           <div class="sol-point">
-            <span class="sol-point-icon">🧬</span>
+            <img class="sol-point-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iOSIgZmlsbD0iIzFhM2EyYSIvPgogIDx0ZXh0IHg9IjI0IiB5PSIyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjYjhkOWMyIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Tk88L3RleHQ+CiAgPGxpbmUgeDE9IjI0IiB5MT0iMTUiIHgyPSIyNCIgeTI9IjciICBzdHJva2U9IiMzZDdhNTIiIHN0cm9rZS13aWR0aD0iMS44Ii8+CiAgPGxpbmUgeDE9IjI0IiB5MT0iMzMiIHgyPSIyNCIgeTI9IjQxIiBzdHJva2U9IiMzZDdhNTIiIHN0cm9rZS13aWR0aD0iMS44Ii8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMjQiIHgyPSI3IiAgeTI9IjI0IiBzdHJva2U9IiMzZDdhNTIiIHN0cm9rZS13aWR0aD0iMS44Ii8+CiAgPGxpbmUgeDE9IjMzIiB5MT0iMjQiIHgyPSI0MSIgeTI9IjI0IiBzdHJva2U9IiMzZDdhNTIiIHN0cm9rZS13aWR0aD0iMS44Ii8+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSI1IiAgcj0iNC41IiBmaWxsPSIjNmFhYjdlIi8+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSI0MyIgcj0iNC41IiBmaWxsPSIjNmFhYjdlIi8+CiAgPGNpcmNsZSBjeD0iNSIgIGN5PSIyNCIgcj0iNC41IiBmaWxsPSIjNmFhYjdlIi8+CiAgPGNpcmNsZSBjeD0iNDMiIGN5PSIyNCIgcj0iNC41IiBmaWxsPSIjNmFhYjdlIi8+Cjwvc3ZnPg==" style="width:28px;height:28px;flex-shrink:0;margin-top:2px;" />
             <div><div class="sol-point-name">산화질소(NO) 촉진</div><div class="sol-point-desc">혈관 확장·항염·면역 조절의 핵심 물질 생성 유도</div></div>
           </div>
           <div class="sol-point">
-            <span class="sol-point-icon">🛡️</span>
+            <img class="sol-point-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+CiAgPHBhdGggZD0iTTI0IDMgTDQyIDEwIEw0MiAyNiBDNDIgMzcgMjQgNDUgMjQgNDUgQzI0IDQ1IDYgMzcgNiAyNiBMNiAxMCBaIiBmaWxsPSIjMWEzYTJhIi8+CiAgPHBhdGggZD0iTTI0IDkgTDM2IDE0IEwzNiAyNiBDMzYgMzMgMjQgMzkgMjQgMzkgQzI0IDM5IDEyIDMzIDEyIDI2IEwxMiAxNCBaIiBmaWxsPSIjM2Q3YTUyIiBvcGFjaXR5PSIwLjUiLz4KICA8cG9seWxpbmUgcG9pbnRzPSIxNiwyNSAyMiwzMSAzMiwxOSIgc3Ryb2tlPSIjYjhkOWMyIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=" style="width:28px;height:28px;flex-shrink:0;margin-top:2px;" />
             <div><div class="sol-point-name">호흡기 면역 강화</div><div class="sol-point-desc">외부 자극에 흔들리지 않는 근본적 면역력 구축</div></div>
           </div>
           <div class="sol-point">
-            <span class="sol-point-icon">📍</span>
+            <img class="sol-point-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTIiIHgyPSIxOSIgeTI9IjQzIiBzdHJva2U9IiMxYTNhMmEiICBzdHJva2Utd2lkdGg9IjIiICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjI0IiB5MT0iOCIgIHgyPSIyNCIgeTI9IjQzIiBzdHJva2U9IiMxYTNhMmEiICBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjMzIiB5MT0iMTIiIHgyPSIyOSIgeTI9IjQzIiBzdHJva2U9IiMxYTNhMmEiICBzdHJva2Utd2lkdGg9IjIiICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHJlY3QgeD0iMTIiIHk9IjgiICB3aWR0aD0iNiIgIGhlaWdodD0iOSIgcng9IjMiIGZpbGw9IiMzZDdhNTIiLz4KICA8cmVjdCB4PSIyMSIgeT0iNCIgIHdpZHRoPSI2IiAgaGVpZ2h0PSI5IiByeD0iMyIgZmlsbD0iIzFhM2EyYSIvPgogIDxyZWN0IHg9IjMwIiB5PSI4IiAgd2lkdGg9IjYiICBoZWlnaHQ9IjkiIHJ4PSIzIiBmaWxsPSIjM2Q3YTUyIi8+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIzMSIgcj0iNSIgICBmaWxsPSIjNmFhYjdlIiBvcGFjaXR5PSIwLjMiLz4KICA8Y2lyY2xlIGN4PSIyNCIgY3k9IjMxIiByPSIyLjUiIGZpbGw9IiM2YWFiN2UiIG9wYWNpdHk9IjAuNyIvPgo8L3N2Zz4=" style="width:28px;height:28px;flex-shrink:0;margin-top:2px;" />
             <div><div class="sol-point-name">침 치료 병행</div><div class="sol-point-desc">호흡기 관련 경혈 자극으로 치료 효과 극대화</div></div>
           </div>
         </div>
@@ -685,17 +737,17 @@ footer {
       <div class="why-card fade-up d1">
         <div class="why-num">01</div>
         <div class="why-name">호흡기 특화 처방</div>
-        <p class="why-desc">보폐고엔오는 제세현한의원이 수년간 임상을 통해 발전시킨 호흡기 특화 치료 프로그램입니다. 일반 한약 처방과 차별화됩니다.</p>
+        <p class="why-desc">보폐고엔오는 한의사들이 수년간 임상을 통해 발전시킨 호흡기 특화 치료 처방입니다. 일반 한약 처방과 차별화됩니다.</p>
       </div>
       <div class="why-card fade-up d2">
         <div class="why-num">02</div>
         <div class="why-name">체질별 1:1 맞춤</div>
-        <p class="why-desc">같은 비염이라도 체질에 따라 처방이 달라집니다. 사상체질 진단 후 개인에게 최적화된 한약을 조제합니다.</p>
+        <p class="why-desc">같은 비염이라도 체질에 따라 처방이 달라집니다. 진료 노하우에 따라 개인에게 최적화된 처방을 권합니다.</p>
       </div>
       <div class="why-card fade-up d3">
         <div class="why-num">03</div>
-        <div class="why-name">충분한 상담 시간</div>
-        <p class="why-desc">빠르게 다음 환자로 넘어가지 않습니다. 충분한 진료 시간으로 증상의 원인을 정확하게 파악하고 치료합니다.</p>
+        <div class="why-name">객관적인 데이터</div>
+        <p class="why-desc">맥진기, 자율신경검사(HRV), 코로트 검사기를 통해 객관적인 상태를 체크합니다. 그리고 환자 상태를 정확하게 파악하고 치료합니다.</p>
       </div>
     </div>
   </div>
@@ -705,34 +757,35 @@ footer {
 <section class="reviews">
   <div class="container">
     <div class="fade-up">
-      <div class="sec-eye"><div class="sec-eye-dot"></div><span class="sec-eye-text">환자 후기</span></div>
-      <h2 class="sec-title">실제 환자분들의<br>이야기입니다</h2>
+      <div class="sec-eye"><div class="sec-eye-dot"></div><span class="sec-eye-text">환자 치료사례</span></div>
+      <h2 class="sec-title">실제 환자분들의<br>치료 경험을 확인하세요</h2>
+      <p class="sec-sub" style="margin-bottom:36px;">증상을 클릭하면 네이버 카페의 실제 치료사례를 확인할 수 있습니다.</p>
     </div>
-    <div class="review-grid">
-      <div class="review-card fade-up d1">
-        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-        <p class="review-text">"10년 넘게 비염으로 고생했는데 한약 두 달 만에 코막힘이 거의 없어졌어요. 아침마다 콧물로 힘들었던 게 이제 없어지니 삶의 질이 완전히 달라졌습니다."</p>
-        <div class="review-author">
-          <div class="review-avatar">김</div>
-          <div><div class="review-name">김○○ 님</div><div class="review-info">40대 · 만성 비염 · 8주 치료</div></div>
-        </div>
-      </div>
-      <div class="review-card fade-up d2">
-        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-        <p class="review-text">"겨울마다 기관지염이 걸렸는데 보폐고엔오 치료 후 올 겨울은 처음으로 감기 한 번 안 걸렸어요. 폐가 튼튼해진 느낌이 확실히 납니다."</p>
-        <div class="review-author">
-          <div class="review-avatar">이</div>
-          <div><div class="review-name">이○○ 님</div><div class="review-info">50대 · 반복 기관지염 · 6주 치료</div></div>
-        </div>
-      </div>
-      <div class="review-card fade-up d3">
-        <div class="review-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-        <p class="review-text">"아이가 잔기침이 심해서 왔는데 원장님이 아이 체질까지 꼼꼼히 봐주셨어요. 한 달 만에 기침이 줄고 잠도 잘 잡니다. 어른인 저도 같이 치료받게 됐어요."</p>
-        <div class="review-author">
-          <div class="review-avatar">박</div>
-          <div><div class="review-name">박○○ 님</div><div class="review-info">30대 · 소아 기침 · 4주 치료</div></div>
-        </div>
-      </div>
+    <div class="rev-photo-grid fade-up">
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EA%B0%90%EA%B8%B0&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+qwkOq4sCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyZDVhM2Q7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFhM2EyYTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+qwkOq4sCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+qwkOq4sCkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/qsJDquLApIi8+CiAgCiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTIwIiByPSI3MCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEyKSIvPgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjEyMCIgcj0iNTAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz4KICA8IS0tIOuniOyKpO2BrCAtLT4KICA8cmVjdCB4PSIxNjAiIHk9IjEwMCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjQ1IiByeD0iMjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC45KSIvPgogIDxsaW5lIHgxPSIxNjAiIHkxPSIxMTgiIHgyPSIyNDAiIHkyPSIxMTgiIHN0cm9rZT0icmdiYSg0NSw5MCw2MSwwLjMpIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxwYXRoIGQ9Ik0xNjAgMTEyIFExNDUgMTIyIDE2MCAxMzIiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0yNDAgMTEyIFEyNTUgMTIyIDI0MCAxMzIiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjkpIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0g67OEL+uwmOynneyehCAtLT4KICA8Y2lyY2xlIGN4PSIxNDgiIGN5PSI4MiIgcj0iNCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIi8+CiAgPGNpcmNsZSBjeD0iMjU4IiBjeT0iOTIiIHI9IjMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIvPgogIDxjaXJjbGUgY3g9IjE2NSIgY3k9IjY4IiByPSIyLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiLz4KICA8IS0tIOusvOqysCAtLT4KICA8cGF0aCBkPSJNMTIwIDIwMCBRMTYwIDE5MCAyMDAgMjAwIFEyNDAgMjEwIDI4MCAyMDAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz4KICA8cGF0aCBkPSJNMTMwIDIxNSBRMTcwIDIwNSAyMTAgMjE1IFEyNTAgMjI1IDI5MCAyMTUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjE1KSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cgo8L3N2Zz4=" alt="감기 치료사례" />
+        <div class="rev-photo-label">감기</div>
+      </a>
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EB%B9%84%EC%97%BC&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+u5hOyXvCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzZDdhNTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzJkNWEzZDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+u5hOyXvCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+u5hOyXvCkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/ruYTsl7wpIi8+CiAgCiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTE1IiByPSI2OCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+CiAgPCEtLSDslrzqtbQg7Iuk66Oo7JejIC0tPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxMDgiIHJ4PSI0MiIgcnk9IjUwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMTgpIi8+CiAgPCEtLSDsvZQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwMCIgY3k9IjExOCIgcng9IjE4IiByeT0iMTQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44NSkiLz4KICA8Y2lyY2xlIGN4PSIxOTMiIGN5PSIxMjAiIHI9IjUiIGZpbGw9InJnYmEoNDUsOTAsNjEsMC40KSIvPgogIDxjaXJjbGUgY3g9IjIwNyIgY3k9IjEyMCIgcj0iNSIgZmlsbD0icmdiYSg0NSw5MCw2MSwwLjQpIi8+CiAgPCEtLSDrrLzrsKnsmrjrk6QgLS0+CiAgPGVsbGlwc2UgY3g9IjE5MyIgY3k9IjEzNiIgcng9IjQiIHJ5PSI2IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNykiLz4KICA8ZWxsaXBzZSBjeD0iMjA3IiBjeT0iMTQwIiByeD0iMy41IiByeT0iNS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiLz4KICA8ZWxsaXBzZSBjeD0iMTkzIiBjeT0iMTQ4IiByeD0iMyIgcnk9IjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC41KSIvPgogIDwhLS0g7J6R7J2AIOusvOuwqeyauCAtLT4KICA8Y2lyY2xlIGN4PSIxNzUiIGN5PSI5NSIgcj0iNSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CiAgPGNpcmNsZSBjeD0iMjI1IiBjeT0iODgiIHI9IjQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yNSkiLz4KICA8IS0tIOusvOqysCDrsLDqsr0gLS0+CiAgPHBhdGggZD0iTTExMCAyMDUgUTE2MCAxOTUgMjAwIDIwNSBRMjQwIDIxNSAyOTAgMjA1IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4yKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cgo8L3N2Zz4=" alt="비염 치료사례" />
+        <div class="rev-photo-label">비염</div>
+      </a>
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EC%B6%95%EB%86%8D%EC%A6%9D&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+y2leuGjeymnSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTNhMmE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzBmMjMxODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+y2leuGjeymnSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+y2leuGjeymnSkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/stpXrho3spp0pIi8+CiAgCiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTEwIiByPSI2NSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+CiAgPCEtLSDslrzqtbQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwMCIgY3k9IjEwNSIgcng9IjQ1IiByeT0iNTIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yKSIvPgogIDwhLS0g64iI7IK0IOywjO2RuOumvCAtLT4KICA8cGF0aCBkPSJNMTc4IDg4IFExODUgODMgMTkyIDg4IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgc3Ryb2tlLXdpZHRoPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0yMDggODggUTIxNSA4MyAyMjIgODgiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSDriIggLS0+CiAgPGVsbGlwc2UgY3g9IjE4NSIgY3k9Ijk2IiByeD0iNyIgcnk9IjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44NSkiLz4KICA8ZWxsaXBzZSBjeD0iMjE1IiBjeT0iOTYiIHJ4PSI3IiByeT0iNSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjg1KSIvPgogIDwhLS0g7L2UIOunie2emCDtkZztmIQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwMCIgY3k9IjExNSIgcng9IjE4IiByeT0iMTMiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44NSkiLz4KICA8ZWxsaXBzZSBjeD0iMjAwIiBjeT0iMTEyIiByeD0iMTIiIHJ5PSI2IiBmaWxsPSJyZ2JhKDE4NCwyMTcsMTk0LDAuNSkiLz4KICA8IS0tIOyGkCAtLT4KICA8cGF0aCBkPSJNMTY4IDEwOCBRMTYwIDExNSAxNjUgMTI1IFExNzAgMTMyIDE3OCAxMjgiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0g67CY7KedIC0tPgogIDxjaXJjbGUgY3g9IjI0NSIgY3k9Ijc4IiByPSI0IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiLz4KICA8Y2lyY2xlIGN4PSIxNTUiIGN5PSI4NSIgcj0iMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjM1KSIvPgoKPC9zdmc+" alt="축농증 치료사례" />
+        <div class="rev-photo-label">축농증</div>
+      </a>
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EA%B0%80%EB%9E%98&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+qwgOuemCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyZDVhM2Q7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzNkN2E1MjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+qwgOuemCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+qwgOuemCkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/qsIDrnpgpIi8+CiAgCiAgPCEtLSDtj5Ag7Iuk66Oo7JejIC0tPgogIDxlbGxpcHNlIGN4PSIxNzUiIGN5PSIxMTUiIHJ4PSIzNSIgcnk9IjQ4IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz4KICA8ZWxsaXBzZSBjeD0iMjI1IiBjeT0iMTE1IiByeD0iMzUiIHJ5PSI0OCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIi8+CiAgPHJlY3QgeD0iMTkzIiB5PSI3NSIgd2lkdGg9IjE0IiBoZWlnaHQ9IjU1IiByeD0iNyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjI1KSIvPgogIDwhLS0g7Y+QIOuCtOu2gCDshLjrtoAgLS0+CiAgPHBhdGggZD0iTTE1OCAxMDggUTE2OCAxMDAgMTc1IDExMCBRMTgyIDEyMCAxNzUgMTMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiLz4KICA8cGF0aCBkPSJNMTY1IDk1IFExNzMgODggMTc4IDk4IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC41KSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiLz4KICA8cGF0aCBkPSJNMjQyIDEwOCBRMjMyIDEwMCAyMjUgMTEwIFEyMTggMTIwIDIyNSAxMzAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIvPgogIDxwYXRoIGQ9Ik0yMzUgOTUgUTIyNyA4OCAyMjIgOTgiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIvPgogIDwhLS0g6riw7LmoIO2MjOuPmSAtLT4KICA8cGF0aCBkPSJNMjAwIDE2MCBRMjIwIDE1NSAyNDAgMTY1IFEyNjAgMTc1IDI4MCAxNjAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjQ1KSIgc3Ryb2tlLXdpZHRoPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0yMDAgMTcyIFEyMjUgMTY1IDI1MCAxNzUgUTI3MCAxODUgMjkwIDE3MiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTIwMCAxODQgUTIyOCAxNzUgMjYwIDE4NSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KCjwvc3ZnPg==" alt="가래 치료사례" />
+        <div class="rev-photo-label">가래</div>
+      </a>
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EB%AA%A9%EC%86%8C%EB%A6%AC&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+uqqeyGjOumrCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzZDdhNTI7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFhM2EyYTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+uqqeyGjOumrCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+uqqeyGjOumrCkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/rqqnshozrpqwpIi8+CiAgCiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTEwIiByPSI2NSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+CiAgPCEtLSDrp4jsnbTtgawgLS0+CiAgPHJlY3QgeD0iMTgyIiB5PSI3MiIgd2lkdGg9IjM2IiBoZWlnaHQ9IjU4IiByeD0iMTgiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC44OCkiLz4KICA8IS0tIOuniOydtO2BrCDqt7jrprQg65287J24IC0tPgogIDxsaW5lIHgxPSIxODIiIHkxPSI5NSIgeDI9IjIxOCIgeTI9Ijk1IiBzdHJva2U9InJnYmEoNDUsOTAsNjEsMC4yNSkiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjE4MiIgeTE9IjEwMyIgeDI9IjIxOCIgeTI9IjEwMyIgc3Ryb2tlPSJyZ2JhKDQ1LDkwLDYxLDAuMjUpIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxsaW5lIHgxPSIxODIiIHkxPSIxMTEiIHgyPSIyMTgiIHkyPSIxMTEiIHN0cm9rZT0icmdiYSg0NSw5MCw2MSwwLjI1KSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8IS0tIOuniOydtO2BrCDsiqTtg6Drk5wgLS0+CiAgPGxpbmUgeDE9IjIwMCIgeTE9IjEzMCIgeDI9IjIwMCIgeTI9IjE1OCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNzUpIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSIxODAiIHkxPSIxNTgiIHgyPSIyMjAiIHkyPSIxNTgiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjc1KSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8IS0tIOydjO2MjCAtLT4KICA8cGF0aCBkPSJNMjI4IDg4IFEyMzggMTAxIDIyOCAxMTQiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjY1KSIgc3Ryb2tlLXdpZHRoPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0yMzggODIgUTI1MiAxMDEgMjM4IDEyMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNDUpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0xNzIgODggUTE2MiAxMDEgMTcyIDExNCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNjUpIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTE2MiA4MiBRMTQ4IDEwMSAxNjIgMTIwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC40NSkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cgo8L3N2Zz4=" alt="목소리 치료사례" />
+        <div class="rev-photo-label">목소리</div>
+      </a>
+      <a href="https://m.cafe.naver.com/ca-fe/web/cafes/20902418/search?q=%EA%B8%B0%EC%B9%A8&mi=0&ta=SUBJECT&pc=ALL&od=NEW" target="_blank" class="rev-photo-card">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnX+q4sOy5qCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTNhMmE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzJkNWEzZDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNoaW5lX+q4sOy5qCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMC4xMik7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgyNTUsMjU1LDI1NSwwKTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnX+q4sOy5qCkiLz4KICA8cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNzaGluZV/quLDsuagpIi8+CiAgCiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMTA4IiByPSI2NSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEyKSIvPgogIDwhLS0g7Ja86rW0IC0tPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxMDIiIHJ4PSI0NCIgcnk9IjUwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz4KICA8IS0tIOuIiCDssKHqt7jrprwgLS0+CiAgPHBhdGggZD0iTTE4MSA4NCBRMTg4IDc5IDE5NSA4NCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiIHN0cm9rZS13aWR0aD0iMi41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNMjA1IDg0IFEyMTIgNzkgMjE5IDg0IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC44KSIgc3Ryb2tlLXdpZHRoPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0g7J6FICjquLDsuagg66qo7JaRKSAtLT4KICA8cGF0aCBkPSJNMTc4IDExNSBRMjAwIDEzMCAyMjIgMTE1IiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC44NSkiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjIpIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8IS0tIOq4sOy5qCDtjIzrj5nrk6QgLS0+CiAgPHBhdGggZD0iTTIzMCAxMDggUTI0NSAxMDIgMjU4IDExMiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNjUpIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTIzNSAxMjAgUTI1MyAxMTIgMjcwIDEyNCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNSkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTIzOCAxMzIgUTI2MCAxMjIgMjc4IDEzNiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMzUpIiBzdHJva2Utd2lkdGg9IjEuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSDshpAgLS0+CiAgPHBhdGggZD0iTTE2NSAxMTggUTE1NSAxMjYgMTYwIDEzOCBRMTY1IDE0OCAxNzUgMTQyIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC41NSkiIHN0cm9rZS13aWR0aD0iMi41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KCjwvc3ZnPg==" alt="기침 치료사례" />
+        <div class="rev-photo-label">기침</div>
+      </a>
     </div>
   </div>
 </section>
@@ -753,6 +806,48 @@ footer {
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">천식에도 도움이 되나요? <span class="faq-q-icon">+</span></button><div class="faq-a">네. 천식은 염증성 질환이기 때문에 보폐고엔오와 소청룡탕을 함께 쓰면 많은 도움을 받을 수 있습니다. 모세기관지염처럼 가슴 깊은 곳에서 쿨럭거리는 기침에도 효과적입니다.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">부작용은 없나요? <span class="faq-q-icon">+</span></button><div class="faq-a">어린아이들이 먹어도 될 정도로 순한 한약입니다.<br><br>· 위염·식도염이 심한 분: 드물게 속쓰림 → 오패산·이진탕 병용으로 조정<br>· 페퍼민트 알레르기: 극히 드물게 재채기 심해짐<br>· 복용 후 가래·콧물 증가: 색이 옅어지고 분비량 증가는 <strong>염증이 줄어드는 좋은 반응</strong>입니다.</div></div>
     </div>
+  </div>
+</section>
+
+<!-- 가격 안내 -->
+<section style="background:var(--cream);padding:88px 24px;">
+  <div class="container">
+    <div class="fade-up" style="text-align:center;margin-bottom:52px;">
+      <div class="sec-eye" style="justify-content:center;"><div class="sec-eye-dot"></div><span class="sec-eye-text">가격 안내</span></div>
+      <h2 class="sec-title">보폐고엔오 처방 가격</h2>
+      <p style="font-size:15px;font-weight:300;color:var(--gray-500);line-height:1.8;margin-top:10px;">전국 공통 균일가 · 할인 이벤트 없음</p>
+    </div>
+    <div class="fade-up" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:800px;margin:0 auto 32px;">
+
+      <!-- 낱개 -->
+      <div style="background:#fff;border:1px solid #ede9e1;border-radius:18px;padding:32px 24px;text-align:center;box-shadow:0 2px 12px rgba(26,58,42,0.06);">
+        <div style="font-size:12px;color:var(--green-accent);font-weight:600;letter-spacing:0.08em;margin-bottom:14px;">낱개</div>
+        <div style="font-family:var(--serif);font-size:38px;font-weight:700;color:var(--green-deep);line-height:1;margin-bottom:8px;">4,000<span style="font-size:18px;font-weight:400;">원</span></div>
+        <div style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">1포</div>
+        <div style="border-top:1px solid #f0efeb;padding-top:16px;font-size:13px;color:var(--gray-500);line-height:1.7;">증상 확인 후<br>소량 처방 시</div>
+      </div>
+
+      <!-- 1박스 -->
+      <div style="background:#fff;border:1px solid #ede9e1;border-radius:18px;padding:32px 24px;text-align:center;box-shadow:0 2px 12px rgba(26,58,42,0.06);">
+        <div style="font-size:12px;color:var(--green-accent);font-weight:600;letter-spacing:0.08em;margin-bottom:14px;">1박스</div>
+        <div style="font-family:var(--serif);font-size:38px;font-weight:700;color:var(--green-deep);line-height:1;margin-bottom:8px;">170,000<span style="font-size:18px;font-weight:400;">원</span></div>
+        <div style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">45포</div>
+        <div style="border-top:1px solid #f0efeb;padding-top:16px;font-size:13px;color:var(--gray-500);line-height:1.7;">약 15~45일분<br>(하루 1~3회 기준)</div>
+      </div>
+
+      <!-- 2박스 추천 -->
+      <div style="background:var(--green-deep);border:2px solid var(--green-mid);border-radius:18px;padding:32px 24px;text-align:center;position:relative;box-shadow:0 8px 28px rgba(26,58,42,0.2);">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green-light);color:var(--green-deep);font-size:11px;font-weight:700;padding:4px 16px;border-radius:20px;white-space:nowrap;">추천</div>
+        <div style="font-size:12px;color:var(--green-light);font-weight:600;letter-spacing:0.08em;margin-bottom:14px;">2박스</div>
+        <div style="font-family:var(--serif);font-size:38px;font-weight:700;color:#fff;line-height:1;margin-bottom:8px;">300,000<span style="font-size:18px;font-weight:400;">원</span></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px;">90포</div>
+        <div style="border-top:1px solid rgba(106,171,126,0.3);padding-top:16px;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;">약 30~90일분<br>뿌리 치료 권장 기간</div>
+      </div>
+
+    </div>
+    <p class="fade-up" style="text-align:center;font-size:13px;color:var(--gray-500);line-height:1.8;">
+      처방 가격은 진료 상담 후 결정됩니다 · 보험한약 병용 시 별도 안내
+    </p>
   </div>
 </section>
 
